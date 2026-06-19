@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://127.0.0.1:8000/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Introvert Extrovert Predictor</title>
+
+</head><body>```
+<style>
+    body{
+        font-family:Arial,sans-serif;
+        background:linear-gradient(135deg,#667eea,#764ba2);
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        min-height:100vh;
+        margin:0;
+    }
+
+    .container{
+        background:white;
+        width:500px;
+        padding:30px;
+        border-radius:15px;
+        box-shadow:0 0 20px rgba(0,0,0,0.2);
+    }
+
+    h1{
+        text-align:center;
+        color:#333;
+    }
+
+    label{
+        display:block;
+        margin-top:12px;
+        font-weight:bold;
+    }
+
+    input,select{
+        width:100%;
+        padding:10px;
+        margin-top:5px;
+        border:1px solid #ccc;
+        border-radius:6px;
+    }
+
+    button{
+        width:100%;
+        margin-top:20px;
+        padding:12px;
+        background:#667eea;
+        color:white;
+        border:none;
+        border-radius:6px;
+        cursor:pointer;
+        font-size:16px;
+    }
+
+    button:hover{
+        background:#5563d6;
+    }
+
+    #result{
+        margin-top:20px;
+        text-align:center;
+        font-size:22px;
+        font-weight:bold;
+        color:green;
+    }
+</style>
+```
+
+
+
+
+
+<div class="container">
+
+```
+<h1>🧠 Introvert Extrovert Predictor</h1>
+
+<label>Time Spent Alone</label>
+<input type="number" id="alone">
+
+<label>Stage Fear</label>
+<select id="fear">
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+</select>
+
+<label>Social Event Attendance</label>
+<input type="number" id="attendance">
+
+<label>Going Outside</label>
+<input type="number" id="outside">
+
+<label>Drained After Socializing</label>
+<select id="drained">
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+</select>
+
+<label>Friends Circle Size</label>
+<input type="number" id="friends">
+
+<label>Post Frequency</label>
+<input type="number" id="post">
+
+<button onclick="predictPersonality()">
+    Predict Personality
+</button>
+
+<div id="result">Prediction: Extrovert</div>
+```
+
+</div>
+
+<script>
+
+async function predictPersonality(){
+
+    const data = {
+        Time_spent_Alone: Number(document.getElementById("alone").value),
+        Stage_fear: document.getElementById("fear").value,
+        Social_event_attendance: Number(document.getElementById("attendance").value),
+        Going_outside: Number(document.getElementById("outside").value),
+        Drained_after_socializing: document.getElementById("drained").value,
+        Friends_circle_size: Number(document.getElementById("friends").value),
+        Post_frequency: Number(document.getElementById("post").value)
+    };
+
+    const response = await fetch("/predict",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    document.getElementById("result").innerHTML =
+        "Prediction: " + result.prediction;
+}
+
+</script>
+
+
+
+</body></html>
